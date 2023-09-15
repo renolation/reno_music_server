@@ -1,17 +1,21 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import {IsNotEmpty, IsOptional, IsString} from "class-validator";
+import {ApiProperty} from "@nestjs/swagger";
 
 export class CreatePlaylistDto {
 
+    @ApiProperty({required: true})
     @IsString()
     @IsNotEmpty()
-    public title:  string;
+    public title: string;
 
+    @ApiProperty({default: null, required: false})
     @IsString()
-    @IsNotEmpty()
-    public poster:  string;
+    @IsOptional()
+    public poster: string;
 
+    @ApiProperty({default: null, required: false})
     @IsString()
-    @IsNotEmpty()
-    public author:  string;
+    @IsOptional()
+    public author: string;
 
 }

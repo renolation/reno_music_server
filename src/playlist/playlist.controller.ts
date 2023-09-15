@@ -1,16 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Query} from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import {ApiBody, ApiConsumes, ApiParam, ApiTags} from "@nestjs/swagger";
 
 @Controller('playlist')
+@ApiTags('playlist')
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) {}
 
   @Post()
-  create(@Body() createPlaylistDto: CreatePlaylistDto) {
-    return this.playlistService.create(createPlaylistDto);
+  async create(@Body() createPlaylistDto: CreatePlaylistDto) {
+    return await this.playlistService.create(createPlaylistDto);
   }
+
+  @Post('/add-song/')
+  async addSong(
+      @Query('id') id: number,
+      @Query('audioId') audioId: string,
+  ) {
+    console.log(+id);
+    console.log(+audioId);
+    return await this.playlistService.addSong(+id, +audioId);
+  }
+
 
   @Get()
   findAll() {

@@ -32,9 +32,6 @@ export class Audio {
     @Column("text", { array: true, nullable: true})
     genre: string[]
 
-    @ManyToMany(() => Playlist)
-    @JoinTable()
-    playlist: Playlist[]
 
     @Column({default: 0})
     duration: number

@@ -1,9 +1,19 @@
-import { Module } from '@nestjs/common';
-import { PlaylistService } from './playlist.service';
-import { PlaylistController } from './playlist.controller';
+import {Module} from '@nestjs/common';
+import {PlaylistService} from './playlist.service';
+import {PlaylistController} from './playlist.controller';
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {Audio} from "../audio/entities/audio.entity";
+import {Playlist} from "./entities/playlist.entity";
+import {AudioModule} from "../audio/audio.module";
 
 @Module({
-  controllers: [PlaylistController],
-  providers: [PlaylistService]
+    imports: [
+
+        TypeOrmModule.forFeature([Playlist, Audio]),
+    ],
+    controllers: [PlaylistController],
+    providers: [PlaylistService],
+    exports: [PlaylistModule]
 })
-export class PlaylistModule {}
+export class PlaylistModule {
+}

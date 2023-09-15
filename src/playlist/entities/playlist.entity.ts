@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Audio} from "../../audio/entities/audio.entity";
 
 @Entity()
 export class Playlist {
@@ -9,12 +10,14 @@ export class Playlist {
     @Column()
     title: string
 
-    @Column()
+    @Column({nullable: true})
     poster: string
 
-    @Column()
+    @Column({nullable: true})
     author: string
 
-
+    @ManyToMany(() => Audio)
+    @JoinTable()
+    songs: Audio[]
 
 }
