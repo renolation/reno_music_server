@@ -26,8 +26,8 @@ export class PlaylistController {
 
 
   @Get()
-  findAll() {
-    return this.playlistService.findAll();
+  async findAll() {
+    return await this.playlistService.findAll();
   }
 
   @Get(':id')

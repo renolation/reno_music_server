@@ -43,12 +43,23 @@ export class PlaylistService {
         return JSON.stringify(playlist);
     }
 
-    findAll() {
-        return `This action returns all playlist`;
+    async findAll() {
+        return await this.repo.find({
+            relations: {
+                songs: true
+            }
+        });
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} playlist`;
+    async findOne(id: number) {
+        return await this.repo.findOne({
+            where : {
+                id: id,
+            },
+            relations: {
+                songs: true
+            }
+        });
     }
 
     update(id: number, updatePlaylistDto: UpdatePlaylistDto) {
