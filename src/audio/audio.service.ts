@@ -1,11 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAudioDto } from './dto/create-audio.dto';
 import { UpdateAudioDto } from './dto/update-audio.dto';
+import {Audio} from "./entities/audio.entity";
+import {Repository} from "typeorm";
+import {InjectRepository} from "@nestjs/typeorm";
 
 @Injectable()
 export class AudioService {
-  create(createAudioDto: CreateAudioDto) {
-    return 'This action adds a new audio';
+
+  constructor(
+      @InjectRepository(Audio) private repo: Repository<Audio>,
+
+  ) {}
+
+  async create(audio: Audio) {
+    audio.uploadDate = new Date(Date.now());
+
+    const audioEntity = this.repo.create({
+      ...audio,
+    });
+    await this.repo.save(audioEntity);
+    return JSON.stringify(audioEntity);
+
   }
 
   findAll() {
